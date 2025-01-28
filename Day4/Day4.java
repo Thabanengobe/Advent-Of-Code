@@ -26,7 +26,6 @@ public class Day4  extends Day{
   public static boolean findVerticalXmas(int row, int col, String[][] puzzle){
 
     if(puzzle.length - row >= 4){
-
       String xmas = puzzle[row][col] + puzzle[row+1][col] + puzzle[row+2][col] + puzzle[row+3][col];
       return xmas.equals("XMAS") | xmas.equals("SAMX");
     }
@@ -49,16 +48,26 @@ public class Day4  extends Day{
     return false;
   }
 
+  public static boolean findMas(int row, int col, String[][] puzzle){
+
+    if(((puzzle.length -row) >= 3) && ((puzzle.length-col) >= 3)){
+      
+      String xmas1 = puzzle[row][col] + puzzle[row+1][col+1] + puzzle[row+2][col+2];
+      String xmas2 = puzzle[row][col+2] + puzzle[row+1][col+1]+ puzzle[row+2][col];
+      
+      return (xmas1.equals("MAS") | xmas1.equals("SAM")) && (xmas2.equals("MAS") | xmas2.equals("SAM"));
+    }
+    return false;
+  }
+
   public static void main(String[] args) {
     String[][] puzzle = getPuzzle();
     int xmas = 0;
 
     for(int i =0; i < puzzle.length; i++){
+
       for(int j=0; j < puzzle.length; j++){
-        if(findHorizontalXmas(i, j, puzzle)) xmas++;
-        if(findVerticalXmas(i, j, puzzle)) xmas++;
-        if(findDiagonalXmas(i, j, puzzle)) xmas++;
-        if(findDiagonalXmasX(i, j, puzzle)) xmas++;
+        if(findMas(i, j, puzzle)) xmas++;
       }
     }
     System.out.println(xmas);
